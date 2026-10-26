@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ct3o42am5mklh"
-path="res://.godot/imported/BackLane.png-e1de7353f4323a5410b0c0e0b5455d47.ctex"
+uid="uid://bnxky86bgv4yn"
+path="res://.godot/imported/Foreground.png-16da4dc66cbf2a3ceecf9a3c4b23268b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/2Lanes/BackLane.png"
-dest_files=["res://.godot/imported/BackLane.png-e1de7353f4323a5410b0c0e0b5455d47.ctex"]
+source_file="res://Assets/Environment/Foreground.png"
+dest_files=["res://.godot/imported/Foreground.png-16da4dc66cbf2a3ceecf9a3c4b23268b.ctex"]
 
 [params]
 

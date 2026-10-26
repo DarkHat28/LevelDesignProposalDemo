@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cw6qxg0wg0yjg"
-path="res://.godot/imported/FrontGround.png-717a9eeec56d2caedb3232aac9791f40.ctex"
+uid="uid://cel3d1nlwymoc"
+path="res://.godot/imported/FloatingIsland.png-ca69fd5de7e8e634a400ff86f78309cf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/2Lanes/FrontGround.png"
-dest_files=["res://.godot/imported/FrontGround.png-717a9eeec56d2caedb3232aac9791f40.ctex"]
+source_file="res://Assets/Environment/FloatingIsland.png"
+dest_files=["res://.godot/imported/FloatingIsland.png-ca69fd5de7e8e634a400ff86f78309cf.ctex"]
 
 [params]
 
