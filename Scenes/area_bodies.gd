@@ -3,9 +3,9 @@ class_name CollisionTrigger
 extends Node2D
 
 
-@export var push_up_velocity: float = 30.0
+@export var push_up_velocity: float = 50.0
 @export var left_world_boundary_initial: int = -835.0
-@export var left_world_boundary_reposition: float = 310.0
+@export var left_world_boundary_reposition: float = 295.0
 
 @onready var player: Player = %Player
 
@@ -35,8 +35,9 @@ func _on_top_trigger_body_entered(body: Node2D) -> void:
 		top_left_collision.set_deferred("disabled", false)
 		top_right_collision.set_deferred("disabled", false)
 		top_one_way_collision.set_deferred("disabled", false)
+		if %LeftBoundary.position.x == left_world_boundary_reposition:
+			player.velocity.y = -push_up_velocity
 		%LeftBoundary.position.x = left_world_boundary_initial
-		player.velocity.y = -push_up_velocity
 
 
 func _on_stair_top_trigger_body_entered(body: Node2D) -> void:

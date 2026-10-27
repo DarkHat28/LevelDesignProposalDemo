@@ -4,8 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://cnl8213nkibfg" path="res://Assets/Player/player320p.png" id="2_cvnsp"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vlew8"]
-radius = 6.0
-height = 62.0
+radius = 4.0
+height = 46.0
 
 [node name="Player" type="CharacterBody2D" unique_id=456339735 groups=["PLAYER"]]
 collision_layer = 2
@@ -15,7 +15,7 @@ script = ExtResource("1_v0iea")
 [node name="Sprite" type="Sprite2D" parent="." unique_id=744782470]
 unique_name_in_owner = true
 self_modulate = Color(0.31764707, 0.91764706, 0.23529412, 1)
-scale = Vector2(0.15, 0.2)
+scale = Vector2(0.12, 0.15)
 texture = ExtResource("2_cvnsp")
 
 [node name="CollisionShape" type="CollisionShape2D" parent="." unique_id=1290929068]

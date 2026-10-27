@@ -8,21 +8,22 @@ var state: State = State.IDLE
 @onready var sprite: Sprite2D = %Sprite
 
 @export_category("Movement")
-@export var run_speed := 350.0
-@export var acceleration := 1600.0
-@export var friction := 1800.0
-@export_range(0.0, 1.0) var air_control := 0.8
+@export var run_speed: float = 250.0
+@export var acceleration: float = 1200.0
+@export var friction: float = 1500.0
+@export_range(0.0, 1.0) var air_control: float = 0.75
 
 @export_category("Jump")
-@export var jump_velocity := 600
-@export_range(0.0, 1.0) var jump_cut := 0.5     ## Velocity multiplier when jump is released early
-@export var max_fall_speed := 700.0
-@export var max_air_jumps := 1                  ## Extra jumps allowed in the air (1 = double jump)
+@export var jump_velocity: float = 400.0
+@export var max_fall_speed: float = 700.0
+@export var max_air_jumps: int = 1                  ## Extra jumps allowed in the air (1 = double jump)
 @export var drop_through_time := 0.25            ## Seconds a one-way platform is ignored after dropping through it
-@export var drop_speed := 150.0                 ## Initial downward speed when dropping through
+@export var drop_speed: float = 150.0                 ## Initial downward speed when dropping through
 
+#@export_range(0.0, 1.0) var jump_cut := 0.5     ## Velocity multiplier when jump is released early
+var jump_cut: float = 0.5     ## Velocity multiplier when jump is released early
 var _gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
-var _air_jumps_left := 0
+var _air_jumps_left: int = 0
 
 
 func _ready() -> void:
@@ -41,7 +42,7 @@ func _physics_process(delta: float) -> void:
 # ---------------------------------------------------------------------------
 func _state_ground(delta: float) -> void:
 	_apply_gravity(delta)
-	var dir := _move_horizontal(delta)
+	var dir: float = _move_horizontal(delta)
 	if is_on_floor():
 		_air_jumps_left = max_air_jumps
 	if not is_on_floor():
@@ -82,8 +83,8 @@ func _apply_gravity(delta: float) -> void:
 
 ## Input Movement
 func _move_horizontal(delta: float) -> float:
-	var dir := Input.get_axis("move_left", "move_right")
-	var control := 1.0 if is_on_floor() else air_control
+	var dir: float = Input.get_axis("move_left", "move_right")
+	var control: float = 1.0 if is_on_floor() else air_control
 	if dir != 0.0:
 		velocity.x = move_toward(velocity.x, dir * run_speed, acceleration * control * delta)
 		sprite.flip_h = dir < 0.0

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bpjgegms3qqbb"]
 
-[ext_resource type="Texture2D" uid="uid://ct3o42am5mklh" path="res://Assets/Environment/BackLane.png" id="2_fo5ed"]
+[ext_resource type="Texture2D" uid="uid://ct3o42am5mklh" path="res://Assets/Environment/background.png" id="2_fo5ed"]
 [ext_resource type="PackedScene" uid="uid://b24ka0dr8bgp1" path="res://Scenes/player.tscn" id="2_go701"]
 [ext_resource type="Texture2D" uid="uid://bnxky86bgv4yn" path="res://Assets/Environment/Foreground.png" id="3_5ukr8"]
 [ext_resource type="Texture2D" uid="uid://cnl8213nkibfg" path="res://Assets/Player/player320p.png" id="4_k7acu"]
@@ -23,7 +23,7 @@ size = Vector2(50, 30)
 size = Vector2(85, 10)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vlew8"]
-size = Vector2(200, 5)
+size = Vector2(220, 5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5ukr8"]
 size = Vector2(300, 100)
@@ -34,7 +34,23 @@ size = Vector2(300, 100)
 
 [node name="Images" type="Node2D" parent="LevelDesign" unique_id=1840598256]
 
+[node name="Background" type="Sprite2D" parent="LevelDesign/Images" unique_id=1072096484]
+texture = ExtResource("2_fo5ed")
+metadata/_edit_lock_ = true
+
+[node name="Foreground" type="Sprite2D" parent="LevelDesign/Images" unique_id=374431597]
+unique_name_in_owner = true
+texture = ExtResource("3_5ukr8")
+
+[node name="Foremost" type="Sprite2D" parent="LevelDesign/Images/Foreground" unique_id=12743210]
+self_modulate = Color(1.7192913, 1.7192913, 1.7192913, 1)
+position = Vector2(0, 388)
+texture = ExtResource("4_o06y3")
+region_enabled = true
+region_rect = Rect2(0, 772, 1672, 165)
+
 [node name="TopJumpArea" type="Sprite2D" parent="LevelDesign/Images" unique_id=1727149291]
+visible = false
 self_modulate = Color(0, 1, 1, 1)
 position = Vector2(357.99997, 55)
 scale = Vector2(1.0800042, 0.23999941)
@@ -44,6 +60,7 @@ region_rect = Rect2(0, 120, 91, 40)
 metadata/_edit_lock_ = true
 
 [node name="BottomJumpArea" type="Sprite2D" parent="LevelDesign/Images" unique_id=1238267788]
+visible = false
 self_modulate = Color(0, 1, 1, 1)
 position = Vector2(712, 186)
 scale = Vector2(2.7600088, 0.23999941)
@@ -51,22 +68,6 @@ texture = ExtResource("4_k7acu")
 region_enabled = true
 region_rect = Rect2(0, 120, 91, 40)
 metadata/_edit_lock_ = true
-
-[node name="Background" type="Sprite2D" parent="LevelDesign/Images" unique_id=1072096484]
-texture = ExtResource("2_fo5ed")
-metadata/_edit_lock_ = true
-
-[node name="Foreground" type="Sprite2D" parent="LevelDesign/Images" unique_id=374431597]
-unique_name_in_owner = true
-self_modulate = Color(0.78235406, 0.78235406, 0.78235406, 1)
-texture = ExtResource("3_5ukr8")
-
-[node name="Foremost" type="Sprite2D" parent="LevelDesign/Images/Foreground" unique_id=12743210]
-self_modulate = Color(1.7192913, 1.7192913, 1.7192913, 1)
-position = Vector2(0, 388)
-texture = ExtResource("4_o06y3")
-region_enabled = true
-region_rect = Rect2(0, 772, 1672, 165)
 
 [node name="GroundAndBoundaries" type="Node2D" parent="LevelDesign" unique_id=216166588]
 
@@ -79,14 +80,14 @@ collision_mask = 2
 [node name="TopLeftCollision" type="CollisionPolygon2D" parent="LevelDesign/GroundAndBoundaries/Platforms/TopGround" unique_id=927251664]
 unique_name_in_owner = true
 position = Vector2(-249.23247, -5.984211)
-polygon = PackedVector2Array(-516.7675, -25.01579, -426.76752, -16.01579, -363.76752, -15.015791, -304.76752, -16.01579, -250.76753, -18.01579, -200.76753, -13.015791, -98.76753, -5.0157905, 8.232468, -0.015790462, 107.23247, 2.9842095, 191.23247, 6.9842095, 281.23248, 7.9842095, 382.23248, 7.984211, 469.23248, 7.984211, 548.2325, 10.984211, 555.2325, 22.984211, -588.7675, -5.015789, -588.7675, -31.015789)
+polygon = PackedVector2Array(-516.7675, -25.01579, -426.76752, -16.01579, -363.76752, -15.015791, -304.76752, -16.01579, -250.76753, -18.01579, -200.76753, -13.015791, -98.76753, -5.0157905, 8.232468, -0.015790462, 107.23247, 2.9842095, 191.23247, 6.9842095, 281.23248, 7.9842095, 382.23248, 7.984211, 469.23248, 7.984211, 549.2325, 10.984211, 554.2325, 22.984211, -588.7675, -5.015789, -588.7675, -31.015789)
 disabled = true
 one_way_collision = true
 
 [node name="TopRightCollision" type="CollisionPolygon2D" parent="LevelDesign/GroundAndBoundaries/Platforms/TopGround" unique_id=557725717]
 unique_name_in_owner = true
 position = Vector2(617.5292, 17.157764)
-polygon = PackedVector2Array(-203.52917, -9.157764, -137.52917, -7.1577644, -87.529175, -7.1577644, -54.529175, -7.1577644, 30.470825, 1.8422356, 81.470825, -0.15776443, 152.47083, -1.1577644, 223.47083, 0.84223557, 223.47083, 15.842236, -203.52917, 0.84223557)
+polygon = PackedVector2Array(-204.52917, -9.157764, -137.52917, -7.1577644, -87.529175, -7.1577644, -54.529175, -7.1577644, 30.470825, 1.8422356, 81.470825, -0.15776443, 152.47083, -1.1577644, 223.47083, 0.84223557, 223.47083, 15.842236, -204.52917, 0.84223557)
 disabled = true
 one_way_collision = true
 
@@ -98,7 +99,7 @@ script = ExtResource("5_5ukr8")
 
 [node name="TopOneWayCollision" type="CollisionPolygon2D" parent="LevelDesign/GroundAndBoundaries/Platforms/TopOneWay" unique_id=1935009754]
 unique_name_in_owner = true
-polygon = PackedVector2Array(-57, -7, 47.87622, -4.871174, 47.16974, 7.1496773, -55, 5)
+polygon = PackedVector2Array(-60, -7, 50, -4, 50, 6, -59, 4)
 disabled = true
 one_way_collision = true
 
@@ -109,7 +110,7 @@ collision_mask = 2
 
 [node name="StairCollision" type="CollisionPolygon2D" parent="LevelDesign/GroundAndBoundaries/Platforms/Stair" unique_id=342951315]
 unique_name_in_owner = true
-polygon = PackedVector2Array(-101.2601, -5.653366, 45.55945, -5.776932, 161.92029, -5.384468, 165.60516, 2.8265915, -143.67273, 2.4194107, -195.93414, 10.527721, -152.23529, -6.8909454)
+polygon = PackedVector2Array(-101.2601, -5.653366, 45.55945, -5.776932, 161.92029, -5.384468, 186.46002, -14.205055, 189.73547, -6.906334, 165.60516, 2.8265915, -143.67273, 2.4194107, -193.34854, 23.61644, -200.49585, 12.574879, -152.23529, -6.8909454)
 disabled = true
 
 [node name="BottomOneWay" type="StaticBody2D" parent="LevelDesign/GroundAndBoundaries/Platforms" unique_id=219709325]
@@ -119,7 +120,7 @@ collision_mask = 2
 script = ExtResource("5_5ukr8")
 
 [node name="BottomOneWayCollision" type="CollisionPolygon2D" parent="LevelDesign/GroundAndBoundaries/Platforms/BottomOneWay" unique_id=301448424]
-polygon = PackedVector2Array(586, 135, 639, 138, 713, 139, 841, 138, 840, 149, 586, 144)
+polygon = PackedVector2Array(612, 137, 639, 138, 713, 139, 841, 138, 840, 149, 612, 145)
 one_way_collision = true
 
 [node name="Boundaries" type="Node2D" parent="LevelDesign/GroundAndBoundaries" unique_id=1216629585]
@@ -133,7 +134,7 @@ shape = SubResource("RectangleShape2D_0fj1v")
 
 [node name="LeftBoundary" type="StaticBody2D" parent="LevelDesign/GroundAndBoundaries/Boundaries" unique_id=2017053404]
 unique_name_in_owner = true
-position = Vector2(-835, 0)
+position = Vector2(-834, 13)
 rotation = 1.5707964
 collision_mask = 2
 
@@ -151,7 +152,7 @@ shape = SubResource("WorldBoundaryShape2D_vlew8")
 script = ExtResource("5_k7acu")
 
 [node name="TopTrigger" type="Area2D" parent="LevelDesign/AreaBodies" unique_id=553324323]
-position = Vector2(305, -15)
+position = Vector2(284, -7)
 collision_layer = 4
 collision_mask = 2
 monitorable = false
@@ -176,7 +177,7 @@ disabled = true
 debug_color = Color(0.85882354, 0, 0.8784314, 0.41960785)
 
 [node name="MiddleTrigger" type="Area2D" parent="LevelDesign/AreaBodies" unique_id=791662336]
-position = Vector2(695, 118)
+position = Vector2(717, 134)
 collision_layer = 4
 collision_mask = 2
 monitorable = false
@@ -198,7 +199,7 @@ debug_color = Color(0, 1, 0, 0.41960785)
 
 [node name="Player" parent="." unique_id=456339735 instance=ExtResource("2_go701")]
 unique_name_in_owner = true
-position = Vector2(520, 235)
+position = Vector2(-187, 239)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1328332030 node_paths=PackedStringArray("player")]
 position = Vector2(-62, -6)
