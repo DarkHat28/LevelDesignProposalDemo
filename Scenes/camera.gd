@@ -19,8 +19,8 @@ extends Camera2D
 
 @export_category("Zoom Settings")
 @export var zoom_speed: float = 0.8 ## Max zoom change per second (1.0 = full zoom range in 1 second).
-@export var zoom_out_level: Vector2 = Vector2(1.5, 1.5)
-@export var zoom_in_level: Vector2 = Vector2(2.0, 2.0)
+@export var zoom_out_level: Vector2 = Vector2(1.8, 1.8)
+@export var zoom_in_level: Vector2 = Vector2(2.3, 2.3)
 @export var zoom_start_y: float = 160.0
 @export var zoom_end_y: float = 50.0
 

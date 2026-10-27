@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cnl8213nkibfg" path="res://Assets/Player/player320p.png" id="2_cvnsp"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vlew8"]
-radius = 4.0
+radius = 5.0
 height = 46.0
 
 [node name="Player" type="CharacterBody2D" unique_id=456339735 groups=["PLAYER"]]
