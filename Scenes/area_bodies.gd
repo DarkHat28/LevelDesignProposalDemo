@@ -8,6 +8,7 @@ extends Node2D
 @export var left_world_boundary_reposition: float = 295.0
 
 @onready var player: Player = %Player
+@onready var right_boundary_marker: Marker2D = %RightBoundaryMarker
 
 
 ## Platform Collisions
@@ -53,6 +54,9 @@ func _on_middle_trigger_body_entered(body: Node2D) -> void: ## DONE ✅
 	stair_top_trigger_collision.set_deferred("disabled", false)
 	stair_collision.set_deferred("disabled", false)
 	top_trigger_collision.set_deferred("disabled", true)
+	if right_boundary_marker:
+		%LeftBoundary.position.x = right_boundary_marker.global_position.x
+		return
 	%LeftBoundary.position.x = left_world_boundary_reposition
 
 

@@ -38,7 +38,7 @@ size = Vector2(50, 30)
 size = Vector2(85, 10)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vlew8"]
-size = Vector2(220, 5)
+size = Vector2(238, 5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5ukr8"]
 size = Vector2(300, 100)
@@ -61,7 +61,9 @@ offset_right = 34.0
 offset_bottom = -43.0
 grow_horizontal = 2
 grow_vertical = 0
+focus_mode = 0
 theme_override_styles/normal = SubResource("StyleBoxFlat_ikia7")
+action_mode = 0
 icon = ExtResource("2_ikia7")
 icon_alignment = 1
 
@@ -70,6 +72,8 @@ icon_alignment = 1
 [node name="Images" type="Node2D" parent="LevelDesign" unique_id=1840598256]
 
 [node name="FloatingIsland" type="Sprite2D" parent="LevelDesign/Images" unique_id=262744302]
+unique_name_in_owner = true
+visible = false
 position = Vector2(1533, -13)
 texture = ExtResource("1_5v1tr")
 
@@ -90,6 +94,7 @@ region_rect = Rect2(0, 772, 1672, 165)
 
 [node name="TopJumpArea" type="Sprite2D" parent="LevelDesign/Images" unique_id=1727149291]
 unique_name_in_owner = true
+visible = false
 self_modulate = Color(0.7529412, 1, 0, 1)
 position = Vector2(357.99997, 55)
 scale = Vector2(1.0800042, 0.23999941)
@@ -141,14 +146,14 @@ polygon = PackedVector2Array(-60, -7, 50, -4, 50, 6, -59, 4)
 disabled = true
 one_way_collision = true
 
-[node name="Stair" type="StaticBody2D" parent="LevelDesign/GroundAndBoundaries/Platforms" unique_id=370728200]
+[node name="Stair" type="StaticBody2D" parent="LevelDesign/GroundAndBoundaries/Platforms" unique_id=370728200 groups=["STAIR"]]
 position = Vector2(436.069, 117.617)
 rotation = 0.42183223
 collision_mask = 2
 
 [node name="StairCollision" type="CollisionPolygon2D" parent="LevelDesign/GroundAndBoundaries/Platforms/Stair" unique_id=342951315]
 unique_name_in_owner = true
-polygon = PackedVector2Array(-101.2601, -5.653366, 45.55945, -5.776932, 161.92029, -5.384468, 186.46002, -14.205055, 189.73547, -6.906334, 165.60516, 2.8265915, -143.67273, 2.4194107, -193.34854, 23.61644, -200.49585, 12.574879, -152.23529, -6.8909454)
+polygon = PackedVector2Array(-101.2601, -5.653366, 45.55945, -5.776932, 161.92029, -5.384468, 171.45313, -8.56646, 176.05042, -0.7648392, 165.60516, 2.8265915, -143.67273, 2.4194107, -193.34854, 23.61644, -200.49585, 12.574879, -152.23529, -6.8909454)
 disabled = true
 
 [node name="BottomOneWay" type="StaticBody2D" parent="LevelDesign/GroundAndBoundaries/Platforms" unique_id=219709325]
@@ -158,10 +163,14 @@ collision_mask = 2
 script = ExtResource("5_5ukr8")
 
 [node name="BottomOneWayCollision" type="CollisionPolygon2D" parent="LevelDesign/GroundAndBoundaries/Platforms/BottomOneWay" unique_id=301448424]
-polygon = PackedVector2Array(612, 137, 639, 138, 713, 139, 834, 139, 835, 149, 612, 145)
+polygon = PackedVector2Array(595, 136, 639, 138, 713, 139, 834, 139, 835, 149, 596, 146)
 one_way_collision = true
 
 [node name="Boundaries" type="Node2D" parent="LevelDesign/GroundAndBoundaries" unique_id=1216629585]
+
+[node name="RightBoundaryMarker" type="Marker2D" parent="LevelDesign/GroundAndBoundaries/Boundaries" unique_id=1955044053]
+unique_name_in_owner = true
+position = Vector2(297, -1)
 
 [node name="RightCollisionBoundary" type="StaticBody2D" parent="LevelDesign/GroundAndBoundaries/Boundaries" unique_id=516606312]
 position = Vector2(845, 0)
@@ -170,7 +179,6 @@ collision_mask = 2
 [node name="RightBoundaryCollision" type="CollisionShape2D" parent="LevelDesign/GroundAndBoundaries/Boundaries/RightCollisionBoundary" unique_id=1822218933]
 unique_name_in_owner = true
 shape = SubResource("RectangleShape2D_0fj1v")
-disabled = true
 
 [node name="FarRightBoundaryCollision" type="CollisionShape2D" parent="LevelDesign/GroundAndBoundaries/Boundaries/RightCollisionBoundary" unique_id=1375612885]
 position = Vector2(1515, 0)
@@ -231,6 +239,7 @@ collision_mask = 2
 monitorable = false
 
 [node name="MiddleTriggerCollision" type="CollisionShape2D" parent="LevelDesign/AreaBodies/MiddleTrigger" unique_id=514498985]
+position = Vector2(-9, 0)
 shape = SubResource("RectangleShape2D_vlew8")
 debug_color = Color(0.85882354, 0, 0.8784314, 0.41960785)
 
@@ -247,14 +256,16 @@ debug_color = Color(0, 1, 0, 0.41960785)
 
 [node name="Player" parent="." unique_id=456339735 instance=ExtResource("2_go701")]
 unique_name_in_owner = true
-position = Vector2(668, 255)
+position = Vector2(-526, 259)
+max_air_jumps = 2
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1328332030 node_paths=PackedStringArray("player")]
+[node name="Camera" type="Camera2D" parent="." unique_id=1328332030 node_paths=PackedStringArray("player")]
+unique_name_in_owner = true
 position = Vector2(-62, -6)
 zoom = Vector2(2, 2)
 limit_left = -835
 limit_top = -470
-limit_right = 2365
+limit_right = 835
 limit_bottom = 470
 script = ExtResource("7_o06y3")
 player = NodePath("../Player")
