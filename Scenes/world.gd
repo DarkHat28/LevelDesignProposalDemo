@@ -3,7 +3,6 @@ extends Node2D
 
 
 @export var extend_world: bool = false
-@export var debug: bool = false
 
 @onready var camera: CameraFollow = %Camera
 @onready var right_boundary_collision: CollisionShape2D = %RightBoundaryCollision
@@ -15,7 +14,6 @@ extends Node2D
 func _ready() -> void:
 	right_boundary_collision.disabled = extend_world
 	right_boundary.visible = !extend_world
-	%TopJumpArea.visible = debug
 	%FloatingIsland.visible = false
 	camera.limit_right = 835
 	

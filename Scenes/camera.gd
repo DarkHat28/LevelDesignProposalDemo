@@ -25,13 +25,15 @@ extends Camera2D
 @export var zoom_end_y: float = 50.0
 
 @export_category("Foreground Fade")
-@export var fade_out_gradually: bool = true ## Fade the foreground out when fully zoomed in (false = hide instantly).
-@export var fade_in_gradually: bool = true ## Fade the foreground back in when zooming out (false = show instantly).
+@export var fade_out_gradually: bool = true ## Fade the foreground out smoothly (false = hide instantly).
+@export var fade_in_gradually: bool = true ## Fade the foreground in smoothly (false = show instantly).
 @export var fade_duration: float = 0.7 ## Seconds for a full fade, used for both fade out and fade in.
+
 
 var _speed: float = 0.0
 var _zoom_t: float = 0.0 ## Current zoom progress: 0.0 = zoom_out_level, 1.0 = zoom_in_level.
 var _display_t: float = 0.0
+var _fade_tween: Tween
 
 
 func _ready() -> void:
@@ -47,7 +49,6 @@ func _physics_process(delta: float) -> void:
 		return
 	camera_follow(delta)
 	zoom_manager(delta)
-	foreground_manager(delta)
 
 
 func camera_follow(delta: float) -> void:
@@ -79,18 +80,39 @@ func zoom_manager(delta: float) -> void:
 	_display_t = move_toward(_display_t, _zoom_t, zoom_speed * delta)
 	zoom = zoom_out_level.lerp(zoom_in_level, _display_t)
 
-func foreground_manager(delta: float) -> void:
-	# Fade out only when fully zoomed in. Fade back in as soon as zoom drops below that.
-	var hide_foreground: bool = _display_t >= 1.0
-	var target_alpha: float = 0.0 if hide_foreground else 1.0
-	var gradual: bool = fade_out_gradually if hide_foreground else fade_in_gradually
-	var alpha: float = foreground.modulate.a
-	if gradual and fade_duration > 0.0:
-		alpha = move_toward(alpha, target_alpha, delta / fade_duration)
-	else:
-		alpha = target_alpha
-	foreground.modulate.a = alpha
-	foreground.visible = alpha > 0.0 # Skip drawing when fully transparent.
+
+# ---------------------------------------------------------------------------
+# Foreground API (call these from other scripts)
+# ---------------------------------------------------------------------------
+## Fades the foreground in (or shows it instantly if fade_in_gradually is off).
+func appear_foreground() -> void:
+	_fade_foreground(1.0, fade_in_gradually)
+
+## Fades the foreground out (or hides it instantly if fade_out_gradually is off).
+func disappear_foreground() -> void:
+	_fade_foreground(0.0, fade_out_gradually)
+
+func _fade_foreground(target_alpha: float, gradual: bool) -> void:
+	# Stop any fade that is still running so two tweens never fight each other.
+	if _fade_tween != null and _fade_tween.is_valid():
+		_fade_tween.kill()
+
+	var visible_at_end: bool = target_alpha > 0.0
+	if visible_at_end:
+		foreground.visible = true # Must be visible for the fade-in to be seen.
+
+	if not gradual or fade_duration <= 0.0:
+		foreground.modulate.a = target_alpha
+		foreground.visible = visible_at_end
+		return
+
+	# Scale the duration by how far there is left to fade, so a half-faded sprite takes half the time.
+	var duration: float = absf(foreground.modulate.a - target_alpha) * fade_duration
+	_fade_tween = create_tween()
+	_fade_tween.tween_property(foreground, "modulate:a", target_alpha, duration)
+	if not visible_at_end:
+		_fade_tween.tween_callback(func() -> void: foreground.visible = false) # Skip drawing when fully transparent.
+
 
 func _is_player_on_stairs() -> bool:
 	if not player.is_on_floor():
@@ -102,11 +124,6 @@ func _is_player_on_stairs() -> bool:
 	return false
 
 
-
-
-
-
-#
 #class_name CameraFollow
 #extends Camera2D
 #
@@ -128,10 +145,16 @@ func _is_player_on_stairs() -> bool:
 #
 #@export_category("Zoom Settings")
 #@export var zoom_speed: float = 0.8 ## Max zoom change per second (1.0 = full zoom range in 1 second).
-#@export var zoom_out_level: Vector2 = Vector2(1.5, 1.5)
-#@export var zoom_in_level: Vector2 = Vector2(2.0, 2.0)
+#@export var zoom_out_level: Vector2 = Vector2(1.8, 1.8)
+#@export var zoom_in_level: Vector2 = Vector2(2.3, 2.3)
 #@export var zoom_start_y: float = 160.0
 #@export var zoom_end_y: float = 50.0
+#
+#@export_category("Foreground Fade")
+#@export var fade_out_gradually: bool = true ## Fade the foreground out when fully zoomed in (false = hide instantly).
+#@export var fade_in_gradually: bool = true ## Fade the foreground back in when zooming out (false = show instantly).
+#@export var fade_duration: float = 0.7 ## Seconds for a full fade, used for both fade out and fade in.
+#
 #
 #var _speed: float = 0.0
 #var _zoom_t: float = 0.0 ## Current zoom progress: 0.0 = zoom_out_level, 1.0 = zoom_in_level.
@@ -151,6 +174,7 @@ func _is_player_on_stairs() -> bool:
 		#return
 	#camera_follow(delta)
 	#zoom_manager(delta)
+	#foreground_manager(delta)
 #
 #
 #func camera_follow(delta: float) -> void:
@@ -181,8 +205,19 @@ func _is_player_on_stairs() -> bool:
 	## Move the displayed zoom toward the target at a fixed rate (smooth in and out).
 	#_display_t = move_toward(_display_t, _zoom_t, zoom_speed * delta)
 	#zoom = zoom_out_level.lerp(zoom_in_level, _display_t)
-	## Hidden only when fully zoomed in. Shown as soon as zoom drops below that.
-	#foreground.visible = _display_t < 1.0
+#
+#func foreground_manager(delta: float) -> void:
+	## Fade out only when fully zoomed in. Fade back in as soon as zoom drops below that.
+	#var hide_foreground: bool = _display_t >= 1.0
+	#var target_alpha: float = 0.0 if hide_foreground else 1.0
+	#var gradual: bool = fade_out_gradually if hide_foreground else fade_in_gradually
+	#var alpha: float = foreground.modulate.a
+	#if gradual and fade_duration > 0.0:
+		#alpha = move_toward(alpha, target_alpha, delta / fade_duration)
+	#else:
+		#alpha = target_alpha
+	#foreground.modulate.a = alpha
+	#foreground.visible = alpha > 0.0 # Skip drawing when fully transparent.
 #
 #func _is_player_on_stairs() -> bool:
 	#if not player.is_on_floor():

@@ -8,6 +8,7 @@ extends Node2D
 @export var left_world_boundary_reposition: float = 295.0
 
 @onready var player: Player = %Player
+@onready var camera: CameraFollow = %Camera
 @onready var right_boundary_marker: Marker2D = %RightBoundaryMarker
 
 
@@ -39,13 +40,45 @@ func _on_top_trigger_body_entered(body: Node2D) -> void:
 		if %LeftBoundary.position.x == left_world_boundary_reposition:
 			player.velocity.y = -push_up_velocity
 		%LeftBoundary.position.x = left_world_boundary_initial
-
+	
+	# V2 Demo added
+	%PlaceHolders.visible = true
+	
+	%TopOneWayLeftCollision.set_deferred("disabled", false)
+	%BackLaneDownCollision1.set_deferred("disabled", false)
+	%BackLaneDownCollision2.set_deferred("disabled", false)
+	%BackLaneDownCollision3.set_deferred("disabled", false)
+	%BackLaneDownCollision4.set_deferred("disabled", false)
+	
+	%BottomBoundaryCollision.set_deferred("disabled", true)
+	%ExtendedBottomCollision.set_deferred("disabled", true)
+	
+	$BottomTrigger.monitoring = false
+	
+	camera.disappear_foreground()
+	
 
 func _on_stair_top_trigger_body_entered(body: Node2D) -> void:
 	top_trigger_collision.set_deferred("disabled", false)
 	top_left_collision.set_deferred("disabled", true)
 	top_right_collision.set_deferred("disabled", true)
 	top_one_way_collision.set_deferred("disabled", true)
+	
+	# V2 Demo added
+	%PlaceHolders.visible = false
+	
+	%TopOneWayLeftCollision.set_deferred("disabled", true)
+	%BackLaneDownCollision1.set_deferred("disabled", true)
+	%BackLaneDownCollision2.set_deferred("disabled", true)
+	%BackLaneDownCollision3.set_deferred("disabled", true)
+	%BackLaneDownCollision4.set_deferred("disabled", true)
+	
+	%BottomBoundaryCollision.set_deferred("disabled", false)
+	%ExtendedBottomCollision.set_deferred("disabled", false)
+	
+	$BottomTrigger.monitoring = true
+	
+	camera.appear_foreground()
 
 
 func _on_middle_trigger_body_entered(body: Node2D) -> void: ## DONE ✅
@@ -58,7 +91,6 @@ func _on_middle_trigger_body_entered(body: Node2D) -> void: ## DONE ✅
 		%LeftBoundary.position.x = right_boundary_marker.global_position.x
 		return
 	%LeftBoundary.position.x = left_world_boundary_reposition
-
 
 ## Bottom Trigger Green Color
 func _on_bottom_trigger_body_entered(body: Node2D) -> void: ## DONE ✅

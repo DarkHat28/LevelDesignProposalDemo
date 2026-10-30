@@ -17,8 +17,8 @@ const STAIR_GROUP := &"STAIR"
 
 @export_category("Jump")
 @export var jump_velocity: float = 400.0
+@export var max_jumps: int = 2                  ## Extra jumps allowed in the air (2 = double jump)
 @export var max_fall_speed: float = 700.0
-@export var max_air_jumps: int = 1                  ## Extra jumps allowed in the air (1 = double jump)
 @export var drop_through_time := 0.25               ## Seconds a one-way platform is ignored after dropping through it
 @export var drop_speed: float = 150.0               ## Initial downward speed when dropping through
 
@@ -32,7 +32,7 @@ var _on_stair: bool = false
 
 
 func _ready() -> void:
-	_air_jumps_left = max_air_jumps - 1
+	_air_jumps_left = max_jumps - 1
 	floor_snap_length = maxf(floor_snap_length, 8.0)  # keeps you glued to the slope and its ends
 
 func _physics_process(delta: float) -> void:
@@ -69,7 +69,7 @@ func _state_ground(delta: float) -> void:
 		dir = _move_horizontal(delta)
 
 	if is_on_floor():
-		_air_jumps_left = max_air_jumps - 1
+		_air_jumps_left = max_jumps - 1
 	if not is_on_floor():
 		change_state(State.FALL)
 	elif Input.is_action_just_pressed("jump") and Input.is_action_pressed("move_down") and _try_drop_through():
